@@ -38,6 +38,4 @@ const deepeach = (source = {}, callback = () => {}, clone = false) => {
   return source;
 };
 
-Object.prototype.deepeach = deepeach;
-
 export default deepeach;
