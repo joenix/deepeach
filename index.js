@@ -1,7 +1,12 @@
 const foreach = (source = {}, callback = () => {}) => {
   Object.keys(source).map(item => {
-    callback(source[item], item);
+    source[item] = compare(callback(source[item], item), source[item]);
   });
+  return source;
+};
+
+const compare = (origin, target) => {
+  return origin === undefined ? target : origin;
 };
 
 const make = (key, value) => {
@@ -14,16 +19,25 @@ const check = (value, mode = Object) => {
   return value && value.constructor === mode;
 };
 
-const deepeach = (source = {}, callback = () => {}, deep = false) => {
-  if (deep) {
-    source = JSON.parse(JSON.stringify(source));
+const copy = target => ({
+  __proto__: Object.getPrototypeOf(target),
+  ...target
+});
+
+const deepeach = (source = {}, callback = () => {}, clone = false) => {
+  if (clone) {
+    source = copy(source);
   }
 
-  foreach(source, (value, key) =>
-    check(value)
-      ? deepeach(value, callback, deep)
-      : callback(value, key)
-  );
+  source = foreach(source, (value, key) => {
+    return check(value)
+      ? deepeach(value, callback, clone)
+      : callback(value, key);
+  });
+
+  return source;
 };
+
+Object.prototype.deepeach = deepeach;
 
 export default deepeach;

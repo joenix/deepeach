@@ -1,31 +1,37 @@
 # deepeach
 
-code by joenix
+A simple package for recursion of object.
 
-```bash
+## install
+
+```sh
 npm i deepeach
 # or
 yarn add deepeach
 ```
 
+## how to use ?
+
 ```js
 import deepeach from "deepeach";
 
-let json = {
+let mock = {
   name: "joenix",
-  classname: "senior",
-  mates: {
+  step: 1,
+  children: {
     name: "snoopy",
-    classname: "scientist",
-    mates: {
+    step: 2,
+    children: {
       name: "kitty",
-      classname: "idol"
+      step: 3
     }
   },
   skills: ["magic", "battleax", "storm"]
 };
 
-deepeach(json, (value, key) => {
-  console.log(value, key);
+let result = mock.deepeach((value, key) => {
+  console.log(`${key}: ${value}`);
 });
+
+console.log(result);
 ```
