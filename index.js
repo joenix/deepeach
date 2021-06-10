@@ -1,6 +1,8 @@
-const foreach = (source = {}, callback = () => {}) => {
+const noop = () => {};
+
+const foreach = (source = {}, callback = noop) => {
   Object.keys(source).map(item => {
-    source[item] = compare(callback(source[item], item), source[item]);
+    source[item] = compare(callback(source[item], item, source), source[item]);
   });
   return source;
 };
@@ -24,15 +26,15 @@ const copy = target => ({
   ...target
 });
 
-const deepeach = (source = {}, callback = () => {}, clone = false) => {
+const deepeach = (source = {}, callback = noop, clone = false) => {
   if (clone) {
     source = copy(source);
   }
 
-  source = foreach(source, (value, key) => {
+  source = foreach(source, (value, key, parent) => {
     return check(value)
       ? deepeach(value, callback, clone)
-      : callback(value, key);
+      : callback(value, key, parent);
   });
 
   return source;
