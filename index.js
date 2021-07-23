@@ -26,18 +26,19 @@ const copy = target => ({
   ...target
 });
 
-const deepeach = (source = {}, callback = noop, clone = false) => {
+const deepeach = (source = {}, callback = noop, clone = false, root = []) => {
   if (clone) {
     source = copy(source);
   }
 
   source = foreach(source, (value, key, parent) => {
+    const path = [...root, key];
     return check(value)
-      ? deepeach(value, callback, clone)
-      : callback(value, key, parent);
+      ? deepeach(value, callback, clone, path)
+      : callback(value, key, path, parent);
   });
 
   return source;
 };
 
-export default deepeach;
+module.exports = deepeach;

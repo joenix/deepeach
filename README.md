@@ -29,8 +29,8 @@ let mock = {
   skills: ["magic", "battleax", "storm"]
 };
 
-let result = deepeach(mock, (value, key) => {
-  console.log(`${key}: ${value}`);
+let result = deepeach(mock, (value, key, path) => {
+  console.log(`${key}: ${value}`, path);
 });
 
 console.log(result);

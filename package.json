@@ -1,6 +1,6 @@
 {
   "name": "deepeach",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A simple package for recursion of object",
   "main": "index.js",
   "author": "joenix",
