@@ -33,10 +33,12 @@ const deepeach = (source = {}, callback = noop, clone = false, root = []) => {
 
   source = foreach(source, (value, key, parent) => {
     const path = [...root, key];
-    return check(value) ? deepeach(value, callback, clone, path) : callback(value, key, path, parent);
+    return check(value)
+      ? deepeach(value, callback, clone, path)
+      : callback(value, key, path, parent);
   });
 
   return source;
 };
 
-export default deepeach;
+module.exports = deepeach;
